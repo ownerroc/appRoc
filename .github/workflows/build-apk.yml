@@ -21,9 +21,9 @@ jobs:
           java-version: '21'
           cache: 'gradle'
 
-      - name: Ensure gradlew has LF line endings and is executable
+      - name: Fix line endings and ensure executable
         run: |
-          dos2unix gradlew
+          sed -i 's/\r$//' gradlew
           chmod +x gradlew
 
       - name: Build release APK (signed with debug keystore)
