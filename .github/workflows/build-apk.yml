@@ -23,8 +23,8 @@ jobs:
 
       - name: Fix line endings and ensure executable
         run: |
-          sed -i 's/\r$//' gradlew
-          chmod +x gradlew
+          sed -i 's/\r$//' gradlew scripts/*.sh
+          chmod +x gradlew scripts/*.sh
 
       - name: Build release APK (signed with debug keystore)
         run: ./gradlew assembleRelease --stacktrace
