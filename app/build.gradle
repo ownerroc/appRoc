@@ -11,7 +11,7 @@ android {
     buildToolsVersion = build_tools
 
     defaultConfig {
-        applicationId 'io.github.muntashirakon.AppManager'
+        applicationId 'io.github.ivansslo.approc'
         minSdk min_sdk
         targetSdk target_sdk
         versionCode 451
@@ -34,17 +34,30 @@ android {
     }
 
     signingConfigs {
-        debug {
-            storeFile file('dev_keystore.jks')
-            storePassword 'kJCp!Bda#PBdN2RLK%yMK@hatq&69E'
-            keyPassword 'kJCp!Bda#PBdN2RLK%yMK@hatq&69E'
-            keyAlias 'key0'
+        release {
+            // Keystore TIDAK lagi di-commit. CI men-decode dari GitHub Actions secrets;
+            // build lokal bisa meletakkan release-keystore.jks di app/ (di-gitignore) atau
+            // set APPROC_KEYSTORE_BASE64 / APPROC_KEYSTORE_PASSWORD / APPROC_KEYSTORE_ALIAS.
+            def ksFile = file('release-keystore.jks')
+            def ksEnv = System.getenv('APPROC_KEYSTORE_BASE64')
+            if (ksEnv != null && !ksEnv.isEmpty() && !ksFile.exists()) {
+                file('release-keystore.jks').bytes = ksEnv.decodeBase64()
+            }
+            if (ksFile.exists()) {
+                storeFile ksFile
+                storePassword System.getenv('APPROC_KEYSTORE_PASSWORD') ?: 'CHANGE_ME'
+                keyAlias System.getenv('APPROC_KEYSTORE_ALIAS') ?: 'appRocRelease'
+                keyPassword System.getenv('APPROC_KEYSTORE_PASSWORD') ?: 'CHANGE_ME'
+            } else {
+                // Fallback: unsigned release (CI lama / build lokal tanpa keystore)
+                storeFile null
+            }
         }
     }
 
     buildTypes {
         release {
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             resValue "string", "app_name", "appRoc"
@@ -52,7 +65,7 @@ android {
         debug {
             applicationIdSuffix '.debug'
             versionNameSuffix '-DEBUG'
-            signingConfig signingConfigs.debug
+            // debug buildType memakai debug keystore default Android SDK
             resValue "string", "app_name", "appRoc Debug"
         }
     }
