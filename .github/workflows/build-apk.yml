@@ -23,7 +23,7 @@ jobs:
 
       - name: Ensure gradlew has LF line endings and is executable
         run: |
-          dos2unix gradlew
+          sed -i 's/\r$//' gradlew
           chmod +x gradlew
 
       - name: Decode release keystore from secrets
