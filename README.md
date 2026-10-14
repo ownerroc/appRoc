@@ -11,14 +11,14 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/ivansslo/appRoc">GitHub</a> ·
-  <a href="https://github.com/ivansslo/appRoc/actions">Builds</a> ·
+  <a href="https://github.com/ownerroc/appRoc">GitHub</a> ·
+  <a href="https://github.com/ownerroc/appRoc/actions">Builds</a> ·
   <a href="COPYING">License</a>
 </p>
 
 ---
 
-**appRoc** is a fork of [App Manager](https://github.com/ivansslo/AppManager),
+**appRoc** is a fork of [App Manager](https://github.com/MuntashirAkon/AppManager),
 rebranded and maintained by [Ivan Ssl (ivansslo)](https://github.com/ivansslo).
 It is an advanced package manager and APK inspector for Android that lets you see the
 structure and manifest of any APK, manage installed apps, permissions, and much more.
@@ -37,7 +37,7 @@ structure and manifest of any APK, manage installed apps, permissions, and much 
 ## Building
 
 APKs are built automatically on every push via
-[GitHub Actions](https://github.com/ivansslo/appRoc/actions) — see
+[GitHub Actions](https://github.com/ownerroc/appRoc/actions) — see
 `.github/workflows/build-apk.yml`. Build artifacts (signed debug-release APKs) are
 attached to each run.
 
