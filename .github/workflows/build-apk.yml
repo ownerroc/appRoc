@@ -24,7 +24,7 @@ jobs:
       - name: Ensure gradlew has LF line endings and is executable
         run: |
           sed -i 's/\r$//' gradlew
-          chmod +x gradlew
+          chmod +x gradlew scripts/*.sh docs/raw/en/doctool.sh
 
       - name: Decode release keystore from secrets
         env:
