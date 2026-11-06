@@ -57,7 +57,12 @@ android {
 
     buildTypes {
         release {
-            signingConfig signingConfigs.release
+            // Attach signing config only when a keystore is actually present.
+            // Without it, leave the release type unsigned (app-release-unsigned.apk)
+            // so CI can produce an artifact to be signed locally via apksigner.
+            if (signingConfigs.release.storeFile != null) {
+                signingConfig signingConfigs.release
+            }
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             resValue "string", "app_name", "appRoc"
